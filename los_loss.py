@@ -1,7 +1,6 @@
 #!/usr/bin/python
 import math, sys
-
-light_speed = float(299792458)
+from measure import parse_length, parse_freq
 
 def loss(wlen, dist):
     k = math.pi * 4
@@ -12,10 +11,10 @@ def freq_to_wlen(freq):
     return light_speed / freq
 
 if (len(sys.argv) != 3):
-    print "Usage:\n{} <freq_Hz> <distance_meters>".format(sys.argv[0])
+    print "Usage:\n{} <freq> <distance>".format(sys.argv[0])
 else:
-    freq = float(sys.argv[1])
-    dist = float(sys.argv[2])
-    wlen = freq_to_wlen(freq)
-    atten = loss(wlen, dist)
-    print "atten: -{:f} dB\n".format(atten)
+
+    dist_in, dist_m = parse_length(sys.argv[2])
+    freq_hz, wlen_in, wlen_m = parse_freq(sys.argv[1])
+    atten = loss(wlen_m, dist_m)
+    print "atten: {:f} dB\n".format(atten)
